@@ -1,19 +1,31 @@
-package hiber.dao;
+package hiber.model;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "car")
 public class Car {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
     @Column(name = "model")
     private String model;
 
     @Column(name = "series")
     private int series;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @OneToOne(mappedBy = "car")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Car() {
     }
@@ -45,5 +57,14 @@ public class Car {
 
     public void setSeries(int series) {
         this.series = series;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "model='" + model + '\'' +
+                ", series=" + series +
+                ", id=" + id +
+                '}';
     }
 }
